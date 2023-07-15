@@ -18,9 +18,9 @@ func main() {
 			"message": "ayylamo",
 		})
 	})
-	r.GET("/gnome", func(c *gin.Context) {
+	r.GET("/minor", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
-			"message": "gnome",
+			"message": "minor",
 		})
 	})
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")

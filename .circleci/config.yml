@@ -1,0 +1,24 @@
+version: 2.1
+
+executors:
+  common-executor:
+    working_directory: ~/go/src/github.com/Clever/breakdown
+    docker:
+      - image: cimg/go:1.19
+
+jobs:
+  build:
+    executor: common-executor
+    steps:
+      - attach_workspace:
+          at: ~/go/src/github.com/Clever
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run: DOCKER_BUILDKIT=1 docker build -t image:base --target builder --ssh default .
+      - run: DOCKER_BUILDKIT=1 docker build -t image:latest .
+
+workflows:
+  version: 2.1
+  build:
+    jobs:
+      - build

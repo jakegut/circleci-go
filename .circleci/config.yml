@@ -16,8 +16,9 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - checkout
-      - run: DOCKER_BUILDKIT=1 docker build -t image:base --target builder --ssh default .
-      - run: DOCKER_BUILDKIT=1 docker build -t image:latest .
+      - run: docker buildx create --name container --driver=docker-container --use --bootstrap
+      - run: docker buildx build --load -t image:base --target builder --builder container .
+      - run: docker buildx build --load -t image:latest --builder container .
 
 workflows:
   version: 2.1

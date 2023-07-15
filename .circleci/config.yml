@@ -5,6 +5,7 @@ executors:
     working_directory: ~/go/src/github.com/Clever/breakdown
     docker:
       - image: cimg/go:1.19
+    resource: small
 
 jobs:
   build:
@@ -14,6 +15,7 @@ jobs:
           at: ~/go/src/github.com/Clever
       - setup_remote_docker:
           docker_layer_caching: true
+      - checkout
       - run: DOCKER_BUILDKIT=1 docker build -t image:base --target builder --ssh default .
       - run: DOCKER_BUILDKIT=1 docker build -t image:latest .
 
